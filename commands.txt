@@ -1,0 +1,6 @@
+sox input command:
+    sox [filein] -t raw -e float -b 32 - | frame -l (longitud) -p (desplazamiento) -n | sptk window (tipo ventana) | sptk lpc -l 200 -m 10
+
+ Ejemplo: sox spk_8mu/speecon/BLOCK00/SES000/SA000S01.wav -t raw -e float -b 32 - | sptk frame -l 200 -p 100 | sptk window -l 200 | sptk lpc -l 200 -m 10 > salida.lp
+
+ FEAT=lp run_spkid train //Entrenar les gaussianes
