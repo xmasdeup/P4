@@ -223,6 +223,9 @@ namespace upc
 
 			if (verbose & 01)
 				cout << "GMM nmix=" << nmix << "\tite=" << iteration << "\tlog(prob)=" << new_prob << "\tinc=" << inc_prob << endl;
+			inc_prob = new_prob - old_prob;
+			if ( inc_prob < inc_threshold) return 0; 
+			old_prob = new_prob;
 		}
 		return 0;
 	}
