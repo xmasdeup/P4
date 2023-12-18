@@ -1,0 +1,18 @@
+sox input command:
+    sox [filein] -t raw -e float -b 32 - | frame -l (longitud) -p (desplazamiento) -n | sptk window (tipo ventana) | sptk lpc -l 200 -m 10
+
+ Ejemplo: sox spk_8mu/speecon/BLOCK00/SES000/SA000S01.wav -t raw -e float -b 32 - | sptk frame -l 200 -p 100 | sptk window -l 200 | sptk lpc -l 200 -m 10 > salida.lp
+
+ FEAT=lp run_spkid train //Entrenar les gaussianes
+
+ plot_gmm_feat -x 2 -y 3 work/gmm/lp/SES000.gmm work/lp/BLOCK00/SES009/*.lp &
+
+ gmm_verify -d work/lp -e lp -D work/gmm/lp -E gmm lists/gmm.list lists/verif/all.test lists/verif/all.test.candidates
+
+ gmm_verify -d work/lp -e lp -D work/gmm/lp -E gmm lists/gmm.list lists/verif/all.test lists/verif/all.test.candidates | tee proba.txt
+
+
+
+ Implementar mfcc o lpcc amb numeros alts
+ Implementar numero elevat de gaussianes
+ Implementar número elevat de iteracions per entrenar gaussianes
