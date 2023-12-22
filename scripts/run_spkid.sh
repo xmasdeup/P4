@@ -99,9 +99,9 @@ compute_mfcc() {
 }
 
 #  Set the name of the feature (not needed for feature extraction itself)
-if [[ ! -v FEAT && $# > 0 && "$(type -t compute_$1)" = function ]]; then
+if [[ ! -n "$FEAT" && $# > 0 && "$(type -t compute_$1)" = function ]]; then
     FEAT=$1
-elif [[ ! -v FEAT ]]; then
+elif [[ ! -n "$FEAT" ]]; then
     echo "Variable FEAT not set. Please rerun with FEAT set to the desired feature."
     echo
     echo "For instance:"
