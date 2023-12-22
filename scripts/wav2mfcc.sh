@@ -17,14 +17,15 @@ cleanup() {
    \rm -f $base.*
 }
 
-if [[ $# != 3 ]]; then
-   echo "$0 mfcc_order input.wav output.mfcc"
+if [[ $# != 4 ]]; then
+   echo "$0 mfcc_order mfcc_filter input.wav output.mfcc"
    exit 1
 fi
 
 mfcc_order=$1
-inputfile=$2
-outputfile=$3
+mfcc_filter=$2
+inputfile=$3
+outputfile=$4
 
 if [[ $UBUNTU_SPTK == 1 ]]; then
    # In case you install SPTK using debian package (apt-get)
@@ -41,9 +42,8 @@ else
 fi
 
 # Main command for feature extration
-sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 |
-	$MFCC -l 240 -w 1 -s 8.0 -m $mfcc_order > $base.mfcc || exit 1
-   
+sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | 
+	$MFCC -l 240 -L 512 -w 0 -s 8.0 -n $mfcc_filter -m $mfcc_order > $base.mfcc || exit 1
 
 # Our array files need a header with the number of cols and rows:
 ncol=$((mfcc_order)) # mfcc p =>  (gain a1 a2 ... ap) 
