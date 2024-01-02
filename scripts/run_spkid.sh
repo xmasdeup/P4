@@ -93,7 +93,17 @@ compute_mfcc() {
     shift
     for filename in $(sort $*); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
-        EXEC="wav2mfcc 32 64 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        EXEC="wav2mfcc 64 128 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        echo $EXEC && $EXEC || exit 1
+    done
+}
+
+compute_lpcc() {
+    db=$1
+    shift
+    for filename in $(sort $*); do
+        mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
+        EXEC="wav2lpcc 32 42 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
         echo $EXEC && $EXEC || exit 1
     done
 }
@@ -115,20 +125,36 @@ fi
 # For each cmd in command line ...
 # ---------------------------------
 
+train_parallel() {
+   name=$1
+   w=$2
+   lists=$3
+   echo $name ----    
+   EXEC="gmm_train -v 1 -T -1 -N 250 -m 64 -i 2 -n 50 -t -1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
+   echo $EXEC && $EXEC || exit 1
+   echo
+}
+
+
+
+export -f train_parallel
+
+
 for cmd in $*; do
    echo `date`: $cmd '---';
-
    if [[ $cmd == train ]]; then
        ## @file
        # \TODO
        # Select (or change) good parameters for gmm_train
-       for dir in $db_devel/BLOCK*/SES* ; do
-           name=${dir/*\/}
-           echo $name ----
-           EXEC="gmm_train -v 1 -T -1 -N 100 -m 32 -i 2 -n 20 -t -1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
-           echo $EXEC && $EXEC || exit 1
-           echo
-       done
+        for dir in $db_devel/BLOCK*/SES* ; do
+            name=${dir/*\/}
+            echo $name
+            sem -j+0 train_parallel $name $w $lists       
+        done
+        sem --wait
+
+
+
    elif [[ $cmd == test ]]; then
         EXEC="gmm_classify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm $lists/gmm.list $lists/class/all.test"
         echo $EXEC && $EXEC | tee $LOG_CLASS || exit 1
@@ -151,7 +177,7 @@ for cmd in $*; do
        # Implement 'trainworld' in order to get a Universal Background Model for speaker verification
        #
        # - The name of the world model will be used by gmm_verify in the 'verify' command below.
-        EXEC="gmm_train -v 1 -T -1 -N 150 -m 32 -i 2 -n 20 -t -1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train"
+        EXEC="gmm_train -v 1 -T -1 -N 150 -m 64 -i 1 -n 40 -t -1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train"
         echo $EXEC && $EXEC || exit 1
 
 
