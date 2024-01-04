@@ -91,13 +91,24 @@ ejercicios indicados.
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
+    
+    Obtenemos los valores a partir de recortar la información obtenida en fmatrix
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/coeffsobt.png?raw=true)
-    ![Alt text](python1.png)
-    ![Alt text](python2.png)
+
+    En todos recortamos la 4 y 5 columna debido a que la 1a columna se trata de el indicador de fila, y en la segunda o nos encontramos el coeficiente 0 o el valor de la correlación en el caso de lp.
+
+    Leemos el fichero en python y mostramos la gráfica usando matplotlib
+
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/python1.png?raw=true)
+
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/python2.png?raw=true)
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/2nd3rdcoeffs.png?raw=true)
 
   + ¿Cuál de ellas le parece que contiene más información?
-
+    
+    La gráfica que contiene más información se trata la de los coeficientes lp, ya que tiene una forma más comprimida y lineal.
   
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
@@ -109,9 +120,13 @@ ejercicios indicados.
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
   
+  Con pearson obtenemos los valores de la correlación de las diferentes gráficas y como hemos observado previamente se vuelve a recalcar que los coeficientes lp son los que más correlados estan ya que cuanto más cercano a 1 sea el valor absoluto de la correlación más fácil será de predecir su estado.
+
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
 
-  La longitud de la ventana, el desplazamiento de la ventana, la elección de la ventana, el número de coeficientes a calcular y el número de filtros mel (en caso de los MFCC).Adjunte
+  La longitud de la ventana, el desplazamiento de la ventana, la elección de la ventana, el número de coeficientes a calcular y el número de filtros mel (en caso de los MFCC). 
+  En el caso de los coeficientes lp serían entre unos 12-24 y unas 3/2 veces más en el caso de los coeficientes lpcc.
+  En el caso de los coeficientes mfcc serían entre 12-20 y unas 3/2 veces más de filtros mel.
 
 ### Entrenamiento y visualización de los GMM.
 
@@ -120,9 +135,19 @@ Complete el código necesario para entrenar modelos GMM.
 - Inserte una gráfica que muestre la función de densidad de probabilidad modelada por el GMM de un locutor
   para sus dos primeros coeficientes de MFCC.
 
+![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/gmm1.png?raw=true)
+
 - Inserte una gráfica que permita comparar los modelos y poblaciones de dos locutores distintos (la gŕafica
   de la página 20 del enunciado puede servirle de referencia del resultado deseado). Analice la capacidad
   del modelado GMM para diferenciar las señales de uno y otro.
+
+Analizando el locutor 007 en su propia región:
+
+![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/007in007.png?raw=true)  
+
+Analizando el locutor 000 en la región del locutor 007:
+
+![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/000in007.png?raw=true)  
 
 ### Reconocimiento del locutor.
 
@@ -155,7 +180,7 @@ Complete el código necesario para realizar verificación del locutor y optimice
   pérdidas, y el score obtenido usando la parametrización que mejor resultado le hubiera dado en la tarea
   de reconocimiento.
   
-  ## 1. LPCC 
+  ## LPCC 
   ### Hecho con 24 coeficientes lpc y 28 coeficientes lpcc
     Número de errores y aciertos
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-errors.png?raw=true)
@@ -169,6 +194,9 @@ Complete el código necesario para realizar verificación del locutor y optimice
 
 ### Trabajo de ampliación.
 
-- Recuerde enviar a Atenea un fichero en formato zip o tgz con la memoria (en formato PDF) con el trabajo 
-  realizado como ampliación, así como los ficheros `class_ampl.log` y/o `verif_ampl.log`, obtenidos como 
-  resultado del mismo.
+- Se ha realizado una mini ampliación que se ha basado en la aplicación del módulo semaphore incluido en GNU Parallel. 
+Con esto, se ha aconseguido reducir unas 12 veces aproximadamente el tiempo de computación de las gausianas. Agilizando así el proceso.
+
+
+![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/semaphore.png?raw=true)
+
