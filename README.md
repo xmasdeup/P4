@@ -91,14 +91,21 @@ ejercicios indicados.
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/coeffsobt.png?raw=true)
+    ![Alt text](python1.png)
+    ![Alt text](python2.png)
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/2nd3rdcoeffs.png?raw=true)
+
   + ¿Cuál de ellas le parece que contiene más información?
 
+  
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
+  ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/pearson.png?raw=true)
 
   |                        | LP   | LPCC | MFCC |
   |------------------------|:----:|:----:|:----:|
-  | &rho;<sub>x</sub>[2,3] |      |      |      |
+  | &rho;<sub>x</sub>[2,3] | -0.564|-0.239|0.284|
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
   
@@ -121,8 +128,23 @@ Complete el código necesario para entrenar modelos GMM.
 
 Complete el código necesario para realizar reconociminto del locutor y optimice sus parámetros.
 
-- Inserte una tabla con la tasa de error obtenida en el reconocimiento de los locutores de la base de datos
-  SPEECON usando su mejor sistema de reconocimiento para los parámetros LP, LPCC y MFCC.
+- Inserte una tabla con la tasa de error obtenida en el reconocimiento de los locutores de la base de datos SPEECON usando su mejor sistema de reconocimiento para los parámetros LP, LPCC y MFCC.
+  
+  ## 1. MFCC
+  ### Hecho con 18 coeficientes mfcc y 22 filtros mel
+
+    Número de errores y aciertos 
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/mfcc-errors.png?raw=true)  
+    Número de impostores y pérdidas
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/mfcc-cost.png?raw=true)
+
+  ## 2. LPCC (MEJOR MÉTODO) 
+  ### Hecho con 24 coeficientes lpc y 28 coeficientes lpcc
+    Número de errores y aciertos
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-errors.png?raw=true)
+    Número de impostores y pérdidas
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-cost.png?raw=true)
+ 
 
 ### Verificación del locutor.
 
@@ -133,16 +155,12 @@ Complete el código necesario para realizar verificación del locutor y optimice
   pérdidas, y el score obtenido usando la parametrización que mejor resultado le hubiera dado en la tarea
   de reconocimiento.
   
-  1. MFCC
-
-![Alt text](https://github.com/xmasdeup/P4/Masdeu-Alsina/mfcc-errors.png?raw=true)  
-![Alt text](https://github.com/xmasdeup/P4/Masdeu-Alsina/mfcc-cost.png?raw=true)
-
-  2. LPCC
-
-![Alt text](https://github.com/xmasdeup/P4/Masdeu-Alsina/lpcc-errors.png?raw=true)
-
-![Alt text](https://github.com/xmasdeup/P4/Masdeu-Alsina/lpcc-cost.png?raw=true)
+  ## 1. LPCC 
+  ### Hecho con 24 coeficientes lpc y 28 coeficientes lpcc
+    Número de errores y aciertos
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-errors.png?raw=true)
+    Número de impostores y pérdidas
+    ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-cost.png?raw=true)
  
 ### Test final
 
