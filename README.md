@@ -125,7 +125,9 @@ ejercicios indicados.
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
 
   La longitud de la ventana, el desplazamiento de la ventana, la elección de la ventana, el número de coeficientes a calcular y el número de filtros mel (en caso de los MFCC). 
+  
   En el caso de los coeficientes lp serían entre unos 12-24 y unas 3/2 veces más en el caso de los coeficientes lpcc.
+  
   En el caso de los coeficientes mfcc serían entre 12-20 y unas 3/2 veces más de filtros mel.
 
 ### Entrenamiento y visualización de los GMM.
@@ -159,15 +161,19 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
   ### Hecho con 18 coeficientes mfcc y 22 filtros mel
 
     Número de errores y aciertos 
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/mfcc-errors.png?raw=true)  
     Número de impostores y pérdidas
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/mfcc-cost.png?raw=true)
 
   ## 2. LPCC (MEJOR MÉTODO) 
   ### Hecho con 24 coeficientes lpc y 28 coeficientes lpcc
     Número de errores y aciertos
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-errors.png?raw=true)
     Número de impostores y pérdidas
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-cost.png?raw=true)
  
 
@@ -181,10 +187,12 @@ Complete el código necesario para realizar verificación del locutor y optimice
   de reconocimiento.
   
   ## LPCC 
-  ### Hecho con 24 coeficientes lpc y 28 coeficientes lpcc
+  ### Hecho con 24 coeficientes lpc y 28 coeficientes lpcc con 32 gaussianas de GMM
     Número de errores y aciertos
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-errors.png?raw=true)
     Número de impostores y pérdidas
+
     ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/lpcc-cost.png?raw=true)
  
 ### Test final
@@ -192,7 +200,9 @@ Complete el código necesario para realizar verificación del locutor y optimice
 - Adjunte, en el repositorio de la práctica, los ficheros `class_test.log` y `verif_test.log` 
   correspondientes a la evaluación *ciega* final.
 
-### Trabajo de ampliación.
+  ### Todos los ficheros se encuentran en la carpeta final
+
+### Trabajo de MINI ampliación.
 
 - Se ha realizado una mini ampliación que se ha basado en la aplicación del módulo semaphore incluido en GNU Parallel. 
 Con esto, se ha aconseguido reducir unas 12 veces aproximadamente el tiempo de computación de las gausianas. Agilizando así el proceso.
@@ -200,3 +210,19 @@ Con esto, se ha aconseguido reducir unas 12 veces aproximadamente el tiempo de c
 
 ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/semaphore.png?raw=true)
 
+- Para poder usar el semaphore, se tuvo que crear una función con el contenido de train. 
+- Para ejecutar la función, la llamamos con "sem" 
+- Después indicamos la cantidad de trabajos simultáneos, en nuestro caso tenemos 12 cores, lo que significa que podemos hacer -j 12 para tener ocupados todos.
+- Finalmente, llamamos a la función y le introducimos los paramétros del nombre, el working-space y las listas que usaremos
+
+Este es el único caso donde se puede aplicar la función para separar en cores, ya que es el único script que es iterativo en bash, todos los otros son iterativos dentro de cpp o de python.
+
+### Ejemplo de uso 
+
+- 12 cores simúltaneos con 64 gaussianas
+
+  ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/12cores.png?raw=true)
+
+- 1 core simúltaneo con 64 gaussianas 
+
+  ![Alt text](https://github.com/xmasdeup/P4/blob/Masdeu-Alsina/img/1core.png?raw=true)

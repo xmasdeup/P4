@@ -18,7 +18,7 @@ set -o pipefail
 # - db_devel: directory of the speecon database used during development
 # - db_test:  directory of the database used in the final test
 lists=lists
-w=final
+w=work_test
 name_exp=one
 db_devel=spk_8mu/speecon
 db_test=spk_8mu/sr_test
@@ -130,7 +130,7 @@ train_parallel() {
    w=$2
    lists=$3
    echo $name ----    
-   EXEC="gmm_train -v 1 -T -1 -N 250 -m 32 -i 2 -n 50 -t -1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
+   EXEC="gmm_train -v 1 -T -1 -N 250 -m 64 -i 2 -n 50 -t -1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
    echo $EXEC && $EXEC || exit 1
    echo
 }
@@ -149,7 +149,7 @@ for cmd in $*; do
         for dir in $db_devel/BLOCK*/SES* ; do
             name=${dir/*\/}
             echo $name
-            sem -j 12 train_parallel $name $w $lists       
+            sem -j 1 train_parallel $name $w $lists       
         done
         sem --wait
 
